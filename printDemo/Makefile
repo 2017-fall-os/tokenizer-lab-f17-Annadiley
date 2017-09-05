@@ -1,5 +1,4 @@
 all: printFile
-
 CFLAGS = -g -O2
 
 printFile: printFile.o strcopy.o readlines.o

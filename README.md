@@ -1,5 +1,4 @@
 # os-tokenizer-lab
-
 The printDemo subdir includes source code to a program that 
 prints text files line-by-line with line numbers.  It does lots of malloc and 
 pointer futzing.
