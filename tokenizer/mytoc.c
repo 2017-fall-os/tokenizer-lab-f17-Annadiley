@@ -3,17 +3,16 @@
 #include "stdio.h"
 #include "strcopy.h"
 int numChar , numWords,currentWordLen;
-char *stri;                               
+char *stri, *stricopy;                               
 int len[100];                              //stores lenght of every word
 int main (void){
-  stri ="potato y y";
+  stri ="potato y yoo";
   // countWords(stri,' ');
   char **tokeenVect =mytoc(stri,' ');
  
-  printf("%d",numWords);
-  printf("\n");
-  printf("%d",len[1]);
-  printf("\n");
+  // printf("%d",numWords);
+  // printf("\n");
+  // printf("%d",len[1]);
   return 0;
 }
 
@@ -32,30 +31,61 @@ void countWords(char *str, char delim){    //get the number of words in the stri
       }
      *str++;                   //advance the pointer to next character
     }
+    len[numWords]=currentWordLen;       //add lenght to final word
   }
  
 }
-void strcaat(char *dest, char src){    //concatenates 2 characters
-  int size;
-  for(size=0;dest[size]!='\0';++size); //gets the size of the dest string
-  dest[size]=src;                      //on the en of string adds source char
-  dest[size+1]='\0';                   //at the end adds terminating '\0'
 
-
-}
-char ** mytoc(char *str,char delim){
-  countWords(str,delim);             //gets number of words and lenght of words
-  char ** tokenVec = (char **) calloc((numWords+1), sizeof(char*));  //allocates memory for vector given the amount of words
-  for(int tokNum=0;tokNum<numWords;tokNum++){      // for each word
-    tokenVec[tokNum]=(char*)malloc(len[tokNum+1]); //allocate space for the word
-    //char* a =(char*)malloc(len[tokNum+1]);
-    char* a =(char*)str;            //creates a new char pointer to alocate the current first letter of the word
-    for(int cWordLenght =0; cWordLenght < len[tokNum+1];cWordLenght++){ //for the lenght of the word
-      char currents = *str;        //get current character in string
-      strcaat(a,currents);         //add the new character to the previous one
+char *strcopy(char *inStr, int current)	/* like strdup */
+{
+  char *pStr, *copy, *pCopy;
+  size_t len;
+    for (pStr = inStr; *pStr; pStr++)    // count # chars in str
+      ;
+    len = pStr - inStr + 1;
+ 
+  
+    // copy = pCopy = (char *)malloc(len); // allocate memory to hold  copy 
+  if(current!=0){
+    for(int i=0;i<current;i++){
+      copy = pCopy = (char *)malloc(current); // allocate memory to hold  copy 
+  
+      for (pStr = inStr; *pStr; pStr++)   // duplicate 
+	*(pCopy++) = *pStr;
     }
-    tokenVec[tokNum]=a;            //add the complete word to the vector
   }
-  tokenVec[numWords+1]='\0';       //add terminating symbol at the end of vector
-  return tokenVec;                 //return the vector
+  else{
+    copy = pCopy = (char *)malloc(len); // allocate memory to hold  copy 
+       for (pStr = inStr; *pStr; pStr++)   // duplicate 
+	*(pCopy++) = *pStr;
+  }
+  *pCopy = 0;		      	      // terminate copy 
+  return copy;
+}
+
+
+char ** mytoc(char *str,char delim){
+ 
+  stricopy =strcopy(str,0);
+
+  countWords(stricopy,delim);                      //gets number of words and lenght of words
+
+  char ** tokenVec = (char **) calloc((numWords+1), sizeof(char*));               //allocates memory for vector given the amount of words
+
+  for(int tokNum=1;tokNum <= numWords;tokNum++){      // for each word
+    tokenVec[tokNum-1]=(char*)malloc(len[tokNum+1]); //allocate space for the word
+    char* a =(char*)malloc(len[tokNum+1]+1);
+    a =strcopy(str,len[tokNum]);
+    a[len[tokNum]]='\0';
+    for(int i=1; i<=len[tokNum]+1;i++){
+      str++;
+    }
+    // printf("\n");
+    // printf("%s", a);
+
+    tokenVec[tokNum-1]=a;                            //add the complete word to the vector
+  }
+  tokenVec[numWords+1]='\0';                    //add terminating symbol at the end of vector
+  // printf("%s",tokenVec[3]);
+  return tokenVec;                                 //return the vector
 }

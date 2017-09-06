@@ -8,8 +8,8 @@ extern int numChar , numWords;
 void countWords (char *str, char delim);
 
 //Auxiliar method to concatinate strings
-void strcaat(char*dest, char src);
-
+//char *strcopy(char *inStr)	/* like strdup */
+  
 //Main tokenizer method
 char ** mytoc(char *str, char delim);
 #endif
