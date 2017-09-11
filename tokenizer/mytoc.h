@@ -7,9 +7,8 @@ extern int numChar , numWords;
 //Method get the lenght of the string
 void countWords (char *str, char delim);
 
-//Auxiliar method to concatinate strings
-//char *strcopy(char *inStr)	/* like strdup */
-  
+void checkExiit(char *str, char *ex);
+
 //Main tokenizer method
 char ** mytoc(char *str, char delim);
 #endif
