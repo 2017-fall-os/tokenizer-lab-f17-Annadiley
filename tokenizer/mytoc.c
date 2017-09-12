@@ -11,14 +11,35 @@ int main (void){
   equalsExit=0;
   while(equalsExit!=1){
     write(1,"$0",1);                       //display the $ promt
-    read(0,stri,sizeof( stri));            //get user input
+    read(1,stri,sizeof( stri));            //get user input
+    stri[sizeof(stri)+1]='\0';
     char **tokeenVect =mytoc(stri,' ');    //call my tokenizer function
     for(int index =0; index <numWords; index++){        //for each value of the vector
       printf("%s\n",tokeenVect[index]);    //print value
-      equalsExit =1;
+      equalsExit =checkEx(stri);           //check if there must be an exit of the loop
     }
-    free(*tokeenVect);                   
+    for(int i =0; i<sizeof(stri);i++){     //free previous space
+      stri[i]='\0';
+    }                   
   } return 0;
+}
+int checkEx(char *str){
+  if(*str != '\0'){
+    if(*str =='e'){
+	*str ++;
+	if(*str =='x'){
+	  *str++;
+	  if(*str =='i'){
+	    *str++;
+	    if(*str =='t'){
+	      return 1;
+	    }
+	  }
+	}
+      }
+  }
+
+  return 0;
 }
 
 void countWords(char *str, char delim){    //get the number of words in the string

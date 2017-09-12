@@ -7,8 +7,9 @@ extern int numChar , numWords;
 //Method get the lenght of the string
 void countWords (char *str, char delim);
 
-void checkExiit(char *str, char *ex);
-
+//Method to check if the command entered is to exit
+int checkEx(char *str);
+ 
 //Main tokenizer method
 char ** mytoc(char *str, char delim);
 #endif
